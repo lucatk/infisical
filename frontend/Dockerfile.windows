@@ -37,7 +37,8 @@ RUN npx next build --debug
 FROM lucatk/node-windows:18.14.2-ltsc2019-nanoserver AS runner
 WORKDIR /app
 
-RUN mkdir -p /app/.next/cache/images # && chown nextjs:nodejs /app/.next/cache/images
+RUN mkdir -p /app/.next/cache/images
+# && chown nextjs:nodejs /app/.next/cache/images
 VOLUME /app/.next/cache/images
 
 ARG POSTHOG_API_KEY

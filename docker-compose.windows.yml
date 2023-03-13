@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     depends_on:
       - mongo
-    image: lucat/infisical-backend-windows
+    image: lucatk/infisical-backend-windows
     ports:
       - '4000:4000'
     env_file: .env

@@ -35,7 +35,7 @@ services:
 
   mongo:
     container_name: infisical-mongo
-    image: mongo:5-nanoserver-1809
+    image: mongo:nanoserver-1809
     restart: always
     env_file: .env
     environment:

@@ -63,4 +63,4 @@ HEALTHCHECK --interval=10s --timeout=3s --start-period=10s \
     CMD node scripts/healthcheck.js
 
 
-CMD ["/app/scripts/start.sh"]
+CMD ["node", "server.js"]

@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  backend:
+    container_name: infisical-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    image: lucat/infisical-backend-windows
+    ports:
+      - '4000:4000'
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - infisical
+
+  frontend:
+    container_name: infisical-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    image: lucatk/infisical-frontend-windows
+    ports:
+      - '4040:3000'
+    env_file: .env
+    environment:
+      # - NEXT_PUBLIC_POSTHOG_API_KEY=${POSTHOG_PROJECT_API_KEY}
+      - INFISICAL_TELEMETRY_ENABLED=${TELEMETRY_ENABLED}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_PRO=${STRIPE_PRODUCT_PRO}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_TEAM=${STRIPE_PRODUCT_TEAM}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_STARTER=${STRIPE_PRODUCT_STARTER}
+    networks:
+      - infisical
+
+  mongo:
+    container_name: infisical-mongo
+    image: mongo:5-nanoserver-1809
+    restart: always
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - infisical
+
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  infisical:

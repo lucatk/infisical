@@ -45,7 +45,8 @@ ARG POSTHOG_API_KEY
 ENV NEXT_PUBLIC_POSTHOG_API_KEY=$POSTHOG_API_KEY \
     BAKED_NEXT_PUBLIC_POSTHOG_API_KEY=$POSTHOG_API_KEY
 
-COPY --chmod=555 scripts ./scripts
+#COPY --chmod=555 scripts ./scripts
+COPY scripts ./scripts
 COPY --from=builder /app/public ./public
 #RUN chown nextjs:nodejs ./public/data
 COPY --from=builder /app/.next/standalone ./
